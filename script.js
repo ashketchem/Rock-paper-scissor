@@ -1,8 +1,19 @@
 let human_score = 0, computer_score = 0;
+let human_choice, computer_choice, human_Score, computer_Score, results, btn, round;
+human_Score = document.querySelector('#humanScore');
+computer_Score = document.querySelector("#computeScore");
+human_choice = document.querySelector("#user-choice");
+computer_choice = document.querySelector("#computer-choice");
+results = document.querySelector("#resultText");
+btn = document.querySelectorAll(".btn");
+round = document.querySelector("#round");
+
 
 const match = (computer, human) => {
   if (computer === human) {
     return "Nobody. Match is tied";
+  } else if (computer === "rock" && human =="") {
+    return "invalid input, try again"
   } else if (computer === "rock" && human === "paper") {
     human_score += 1;
     return "human";
@@ -25,21 +36,25 @@ const match = (computer, human) => {
 }
 
 for (let i = 1; i <= 5; i++) {
-  console.log(`Round ${i}`);
-  let humanChoice = prompt("choose one from 'rock', 'paper', 'scissor': ", "");
+ round.textContent = (`Round ${i}`);
+  let humanChoice = document.querySelectorAll('.btn').forEach(btn => {
+   btn.addEventListener( 'click', () => {
+     humanChoice = btn.id;
+   })
+  });
   let human = humanChoice.toLowerCase();
   let computerchoice = Math.floor(Math.random() * 3);
   let computer = ["rock", "paper", "scissor"][computerchoice];
 
-  console.log(`Computer chose: ${computer}`);
-  console.log(`Human chose: ${human}`);
+  human_choice.textContent =(`Computer chose: ${computer}`);
+  computer_choice.textContent = (`Human chose: ${human}`);
   console.log(match(computer, human));
 }
 
 if (human_score > computer_score) {
-  console.log("Human is the winner");
+  resultText.textContent = ("Human is the winner");
 } else if (computer_score > human_score) {
-  console.log("Computer is the winner");
+  resultText.textContent = ("Computer is the winner");
 } else {
-  console.log("It's a tie");
+  resultText.textContent = ("It's a tie");
 }
